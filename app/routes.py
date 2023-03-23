@@ -1,6 +1,7 @@
-from app import app
+from app import app, db
 from flask import render_template, redirect, url_for, flash
 from app.forms import SignUpForm
+from app.models import Address
 
 @app.route('/')
 def index():
@@ -19,6 +20,8 @@ def information_entry():
         number = form.number.data
         address = form.address.data
         print(first_name, last_name, number, address)
-        flash(f"Thank you, {first_name} for entering information!", "success")
+        # If check_user is empty, create a new record in the user table
+        new_info = Address(first_name=first_name, last_name=last_name, number=number, address=address)
+        flash(f"Thank you for entering information into the phonebook!", "success")
         return redirect(url_for('index'))
     return render_template('information_entry.html', form=form)
