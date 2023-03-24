@@ -1,8 +1,8 @@
-"""Add address table
+"""Inital migration
 
-Revision ID: fc9213b62c7d
+Revision ID: 89a26ebb7243
 Revises: 
-Create Date: 2023-03-22 22:02:36.650242
+Create Date: 2023-03-23 08:33:27.955824
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'fc9213b62c7d'
+revision = '89a26ebb7243'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -23,7 +23,7 @@ def upgrade():
     sa.Column('first_name', sa.String(length=50), nullable=False),
     sa.Column('last_name', sa.String(length=50), nullable=False),
     sa.Column('number', sa.String(length=15), nullable=False),
-    sa.Column('address', sa.String(length=150), nullable=False),
+    sa.Column('address', sa.String(length=150), nullable=True),
     sa.Column('date_created', sa.DateTime(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )

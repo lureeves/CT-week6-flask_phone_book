@@ -21,7 +21,9 @@ def information_entry():
         address = form.address.data
         print(first_name, last_name, number, address)
         # If check_user is empty, create a new record in the user table
-        new_info = Address(first_name=first_name, last_name=last_name, number=number, address=address)
-        flash(f"Thank you for entering information into the phonebook!", "success")
+        new_contact = Address(first_name=first_name, last_name=last_name, number=number, address=address)
+        flash(f"{new_contact.first_name} {new_contact.last_name} has been added to the phonebook!", "success")
         return redirect(url_for('index'))
     return render_template('information_entry.html', form=form)
+
+

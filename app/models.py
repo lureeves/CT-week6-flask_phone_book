@@ -8,7 +8,7 @@ class Address(db.Model):
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
     number = db.Column(db.String(15), nullable=False)
-    address = db.Column(db.String(150), nullable=False)
+    address = db.Column(db.String(150))
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     def __init__(self, **kwargs):
