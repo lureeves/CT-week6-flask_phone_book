@@ -1,10 +1,10 @@
-from app import db
+from app import db, login
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
-# from flask_login import UserMixin
+from flask_login import UserMixin
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
@@ -12,7 +12,7 @@ class User(db.Model):
     username = db.Column(db.String(75), nullable=False, unique=True)
     password = db.Column(db.String(255), nullable=False)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    phone_number = db.relationship('PhoneNumber', backref='author')
+    phone_number = db.relationship('PhoneNumber', backref='user', lazy=True)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -26,9 +26,9 @@ class User(db.Model):
     def check_password(self, password_guess):
         return check_password_hash(self.password, password_guess)
 
-# @login.user_loader
-# def get_a_user_by_id(user_id):
-#     return db.session.get(User, user_id)
+@login.user_loader
+def get_a_user_by_id(user_id):
+    return db.session.get(User, user_id)
 
 class PhoneNumber(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -45,5 +45,5 @@ class PhoneNumber(db.Model):
         db.session.commit()
 
     def __repr__(self):
-        return f"<Phone Number {self.id}|{self.title}>"
+        return f"<Phone Number {self.id}|{self.first_name} {self.last_name}>"
     
